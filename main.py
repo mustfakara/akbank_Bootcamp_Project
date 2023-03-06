@@ -3,11 +3,12 @@ from datetime import datetime
 
 
 class WrongChoiseException(Exception):
-    # Raises when user enters invalid choice
+    # Kullanıcı giriş ekranında doğru seçim girmediğinde etkinleşen Exception
     pass
 
 
 class Pizza():
+    # Pizza üst class
     def __init__(self):
         pass
 
@@ -17,7 +18,7 @@ class Pizza():
     def get_cost(self):
         pass
 
-
+# Pizzaların subclassları
 class Klasik(Pizza):
     def __init__(self):
         self.name = "Klasik Pizza"
@@ -67,7 +68,8 @@ class Sade(Pizza):
     def get_description(self):
         print("Sade pizza düz hamur, sos ve peynirden oluşmaktadır.")
 
-
+# Decorator Sınıfı ve decorator sınıfını miras alan subclasslar, Super() methodu
+# da kullanılıyor.
 class Decorators():
     def __init__(self):
         pass
@@ -157,8 +159,7 @@ class Misir(Decorators):
 
 def main():
 
-    while True:
-
+    while True:  #Giriş ekranı için bir döngü
         try:
             pizza_choise = int(input("Lütfen bir Pizza Seçiniz :\n \
                 1: Klasik \
@@ -167,7 +168,7 @@ def main():
                 4: Sade Pizza\n"))
 
             if not 0 < pizza_choise < 5:
-                raise WrongChoiseException
+                raise WrongChoiseException  #Yanlış seçim olup olmadığını kontrol eden if else
 
             sauce_choise = int(input("ve seçeceğiniz sos :\n \
                 11: Zeytin \
@@ -178,14 +179,14 @@ def main():
                 16: Mısır\n"))
 
             if not 10 < sauce_choise < 17:
-                raise WrongChoiseException
+                raise WrongChoiseException  #Yanlış seçim olup olmadığını kontrol eden if else
             break
         except WrongChoiseException:
             print("Yanlış bir seçim yaptınız. Lütfen tekrar deneyin !\n")
 
     pizza_dict = {1: Klasik, 2: Margarita, 3: Turk, 4: Sade}
 
-    pizza = pizza_dict[pizza_choise]()
+    pizza = pizza_dict[pizza_choise]()  # Pizza objesi
 
     sauce_dict = {11: Zeytin,
                   12: Mantarlar,
@@ -194,15 +195,15 @@ def main():
                   15: Sogan,
                   16: Misir}
 
-    sauce = sauce_dict[sauce_choise]()
+    sauce = sauce_dict[sauce_choise]()  # Malzeme objesi
 
-    pizza.get_description()
+    pizza.get_description()         # Objelerden ulaşılan get description methodları
     print(sauce.get_description())
 
     header = ["Name", "ID", "Credit Card",
               "Order Description", "Order Time", "Password"]
 
-    with open('orders_db.csv', 'w') as file:
+    with open('orders_db.csv', 'w') as file:        # CSV Dosyanına yazma işlemleri
         writer = csv.writer(file)
         writer.writerow(header)
         # print(f"Sipariş Tutarınız :{int(pizza.get_cost() + sauce.get_cost())}")
